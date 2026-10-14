@@ -1,0 +1,29 @@
+{
+  "name": "learn-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Production-grade Astro 5 Islands Architecture reference implementation",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "astro",
+    "islands-architecture",
+    "zero-js",
+    "ssg",
+    "ssr",
+    "web"
+  ],
+  "author": "The Learning Hub",
+  "license": "MIT"
+}

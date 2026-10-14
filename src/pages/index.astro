@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const stages = [
+  { stage: 'Stage 1', title: 'Foundations & Islands Architecture', desc: 'Zero-JS default HTML rendering, component islands, and Vite build pipeline.' },
+  { stage: 'Stage 2', title: 'Astro Syntax & Content Collections', desc: 'Markdown/MDX schema validation via Zod, type-safe frontmatter, dynamic routing.' },
+  { stage: 'Stage 3', title: 'Hybrid & SSR Server Endpoints', desc: 'On-demand rendering, API endpoints, cookie authentication, server adapters.' },
+  { stage: 'Stage 4', title: 'Multi-Framework Integration', desc: 'Embedding React, Vue, Svelte, and Solid components inside the same Astro page.' },
+  { stage: 'Stage 5', title: 'View Transitions & Performance', desc: 'Native client-side SPA routing transitions, asset optimization, sub-second TTFB.' },
+  { stage: 'Stage 6', title: 'Production Docker Containerization', desc: 'Multi-stage node builder to standalone Nginx or Node SSR production runner.' },
+  { stage: 'Stage 7', title: 'Staff Architect Handbook', desc: 'Enterprise content scale, incremental builds, edge caching, disaster recovery.' }
+];
+---
+
+<Layout title="Learn Astro 5 - Islands Architecture Masterclass">
+  <header class="header">
+    <div class="badge">Astro 5 &bull; Islands Architecture</div>
+    <h1 class="title">Learn Astro</h1>
+    <p class="subtitle">
+      Deliver blazingly fast content sites with zero client-side JavaScript by default, activating interactive islands only where needed.
+    </p>
+  </header>
+
+  <!-- Interactive Client-side island script -->
+  <div class="card" style="text-align: center; background: rgba(188, 82, 238, 0.08); border-color: rgba(188, 82, 238, 0.3);">
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #f0f6fc;">Interactive Client Island Demo</h2>
+    <p style="color: #8b949e; margin-bottom: 1rem;">Click below to test client-side island hydration.</p>
+    <div style="font-size: 2.5rem; font-weight: 800; color: #ff5d01; margin-bottom: 1rem;" id="island-counter">0</div>
+    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+      <button id="decrement-btn">- Decrement</button>
+      <button id="reset-btn">Reset</button>
+      <button id="increment-btn" class="primary">+ Increment</button>
+    </div>
+  </div>
+
+  <section>
+    <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem; color: #f0f6fc;">🗺️ 7-Stage Curriculum Milestones</h2>
+    <div class="grid">
+      {stages.map((s) => (
+        <Card stage={s.stage} title={s.title} description={s.desc} />
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  let count = 0;
+  const counterEl = document.getElementById('island-counter');
+  const incBtn = document.getElementById('increment-btn');
+  const decBtn = document.getElementById('decrement-btn');
+  const resetBtn = document.getElementById('reset-btn');
+
+  function update() {
+    if (counterEl) counterEl.textContent = count.toString();
+  }
+
+  incBtn?.addEventListener('click', () => { count++; update(); });
+  decBtn?.addEventListener('click', () => { count--; update(); });
+  resetBtn?.addEventListener('click', () => { count = 0; update(); });
+</script>
