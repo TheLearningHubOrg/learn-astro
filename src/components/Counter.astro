@@ -1,0 +1,76 @@
+---
+interface Props {
+  label: string;
+  start?: number;
+  min?: number;
+  max?: number;
+}
+
+const { label, start = 0, min, max } = Astro.props;
+// The server renders real markup with the starting value, so the counter is
+// readable before any JavaScript runs. The script below upgrades it in place.
+---
+
+<counter-island data-start={start} data-min={min} data-max={max}>
+  <p class="label">{label}</p>
+  <output aria-live="polite">{start}</output>
+  <div class="buttons">
+    <button type="button" data-step="-1">-1</button>
+    <button type="button" data-reset>Reset</button>
+    <button type="button" data-step="1" class="primary">+1</button>
+  </div>
+</counter-island>
+
+<script>
+  // Astro bundles this script as an ES module and includes it once per page,
+  // however many <Counter> instances the page renders.
+  import { nextCount, type CounterOptions } from '../lib/counter';
+
+  const toNumber = (value: string | undefined) => (value === undefined ? undefined : Number(value));
+
+  class CounterIsland extends HTMLElement {
+    connectedCallback() {
+      const options: CounterOptions = {
+        start: Number(this.dataset.start ?? 0),
+        min: toNumber(this.dataset.min),
+        max: toNumber(this.dataset.max),
+      };
+      const output = this.querySelector('output');
+      let value = options.start;
+
+      this.addEventListener('click', (event) => {
+        const button = (event.target as Element).closest('button');
+        if (!button || !output) return;
+        value = button.hasAttribute('data-reset')
+          ? nextCount(value, { type: 'reset' }, options)
+          : nextCount(value, { type: 'step', by: Number(button.dataset.step) }, options);
+        output.textContent = String(value);
+      });
+    }
+  }
+
+  if (!customElements.get('counter-island')) {
+    customElements.define('counter-island', CounterIsland);
+  }
+</script>
+
+<style>
+  counter-island {
+    display: block;
+    text-align: center;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+  }
+  output {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0.5rem 0 1rem;
+  }
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import { neighbours } from '../lib/curriculum';
+
+interface Props {
+  slug: string;
+}
+
+const { previous, next } = neighbours(Astro.props.slug);
+---
+
+<nav class="stage-nav" aria-label="Stage navigation">
+  {previous ? <a rel="prev" href={`/stages/${previous.slug}/`}>Stage {previous.number}: {previous.title}</a> : <span />}
+  {next && <a rel="next" href={`/stages/${next.slug}/`}>Stage {next.number}: {next.title}</a>}
+</nav>
+
+<style>
+  .stage-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  a {
+    color: var(--accent-astro);
+  }
+</style>

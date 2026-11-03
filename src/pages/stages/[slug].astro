@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import StageNav from '../../components/StageNav.astro';
+import { stagePaths, type Stage } from '../../lib/curriculum';
+
+// Static output: Astro calls this once at build time and writes one HTML file
+// per returned entry, e.g. dist/stages/setup-and-rendering-model/index.html.
+export const getStaticPaths = (() => stagePaths()) satisfies GetStaticPaths;
+
+interface Props {
+  stage: Stage;
+}
+
+const { stage } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<Layout title={`Stage ${stage.number}: ${stage.title}`} description={stage.summary}>
+  <Card stage={`Stage ${stage.number}`} title={stage.title} description={stage.summary} badge="Stage page">
+    <p class="param">Route parameter: <code>{slug}</code></p>
+    <ul>
+      {stage.topics.map((t) => <li><code>{t}</code></li>)}
+    </ul>
+    <p slot="footer">Read the matching section in the README.</p>
+  </Card>
+  <StageNav slug={stage.slug} />
+</Layout>

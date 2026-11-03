@@ -4,17 +4,71 @@ interface Props {
   stage: string;
   description: string;
   badge?: string;
+  href?: string;
 }
 
-const { title, stage, description, badge = 'Mastered' } = Astro.props;
+const { title, stage, description, badge = 'Core', href } = Astro.props;
+// Astro.slots.has() tells you whether the parent passed content for a slot.
+const hasFooter = Astro.slots.has('footer');
 ---
 
-<div class="card">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-    <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #bc52ee; letter-spacing: 0.05em;">{stage}</span>
-    <span style="background: rgba(188, 82, 238, 0.15); color: #bc52ee; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;">{badge}</span>
-  </div>
-  <h3 class="card-title">{title}</h3>
-  <p class="card-desc">{description}</p>
+<article class="card">
+  <header>
+    <span class="stage">{stage}</span>
+    <span class="badge">{badge}</span>
+  </header>
+  <h3>
+    {href ? <a href={href}>{title}</a> : title}
+  </h3>
+  <p>{description}</p>
   <slot />
-</div>
+  {hasFooter && (
+    <footer>
+      <slot name="footer" />
+    </footer>
+  )}
+</article>
+
+<style>
+  /* Scoped: Astro rewrites these selectors so they only match this component. */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .stage {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-astro);
+  }
+  .badge {
+    background: rgba(188, 82, 238, 0.15);
+    color: var(--accent-astro);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  h3 a {
+    color: inherit;
+  }
+  p {
+    color: var(--text-secondary);
+  }
+  footer {
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+  }
+</style>

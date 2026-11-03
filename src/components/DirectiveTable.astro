@@ -1,0 +1,35 @@
+---
+import { directives } from '../lib/hydration';
+---
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Directive</th>
+      <th scope="col">JavaScript loads when</th>
+      <th scope="col">Use it for</th>
+    </tr>
+  </thead>
+  <tbody>
+    {directives.map((d) => (
+      <tr>
+        <td><code>{d.directive}</code></td>
+        <td>{d.trigger}</td>
+        <td>{d.useFor}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+</style>

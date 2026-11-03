@@ -2,28 +2,34 @@
   "name": "learn-astro",
   "type": "module",
   "version": "1.0.0",
-  "description": "Production-grade Astro 5 Islands Architecture reference implementation",
+  "private": true,
+  "description": "Starter project for the Learn Astro guide: static Astro pages, components, slots, dynamic routes and a vanilla island, tested with Vitest and the Container API",
+  "engines": {
+    "node": ">=22.23.4"
+  },
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "lint": "astro check",
+    "test": "vitest run",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.3.0"
+    "astro": "^7.4.5"
   },
   "devDependencies": {
-    "typescript": "^5.7.3"
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
   },
   "keywords": [
     "astro",
     "islands-architecture",
-    "zero-js",
     "ssg",
     "ssr",
     "web"
   ],
-  "author": "The Learning Hub",
+  "author": "Manthan Ankolekar",
   "license": "MIT"
 }

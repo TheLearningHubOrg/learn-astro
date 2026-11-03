@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Counter from '../components/Counter.astro';
+import DirectiveTable from '../components/DirectiveTable.astro';
+---
+
+<Layout title="Islands | Learn Astro" description="Client directives and a framework-free island">
+  <h1>Islands and client directives</h1>
+  <p>
+    Framework components (React, Vue, Svelte, Solid, Preact) are static HTML until you add a
+    <code>client:*</code> directive. Astro components never hydrate; they use a
+    <code>&lt;script&gt;</code> instead, as the counters below do.
+  </p>
+  <DirectiveTable />
+  <!-- Two instances, one bundled script: the module runs once and defines the element. -->
+  <Counter label="Bounded 0..5" start={0} min={0} max={5} />
+  <Counter label="Starts at 100" start={100} />
+</Layout>

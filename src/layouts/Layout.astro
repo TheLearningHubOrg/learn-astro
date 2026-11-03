@@ -6,24 +6,31 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Master Astro 5 Islands Architecture with The Learning Hub' } = Astro.props;
+const { title, description = 'Learn Astro with The Learning Hub' } = Astro.props;
+// Astro.url is the URL of the page being rendered (at build time for static pages).
+const path = Astro.url.pathname;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="https://astro.build/favicon.svg" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+      <a href="/islands/" aria-current={path.startsWith('/islands') ? 'page' : undefined}>Islands</a>
+      <a href="/stages.json">stages.json</a>
+    </nav>
     <main>
       <slot />
     </main>
     <footer>
-      <p>&copy; {new Date().getFullYear()} The Learning Hub Organization &bull; Built with Astro 5</p>
+      <p>&copy; {new Date().getFullYear()} The Learning Hub &bull; Built with Astro</p>
     </footer>
   </body>
 </html>
